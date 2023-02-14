@@ -1,43 +1,31 @@
 # File exclude plugin for mkdocs
 
-`mkdocs-exclude` is a
-[mkdocs plugin](http://www.mkdocs.org/user-guide/plugins/) that allows you
-to exclude files from your input using unix-style wildcards (globs) or
-regular expressions (regexes).
+`mkdocs-exclude` is a [mkdocs plugin](http://www.mkdocs.org/user-guide/plugins/) that allows you
+to conditionally include files from your input using regular expressions (regexes).
 
-This implements what people were asking for in some mkdocs bugs, such as
-<https://github.com/mkdocs/mkdocs/issues/1500> and
-<https://github.com/mkdocs/mkdocs/issues/1152>.
+This will only include the following files in your `mkdocs`:
 
+- file location does not have the specified prefix
+- file is in the specified prefix, and matches any of the specified regexes
+
+The big advantage of this is, that you can include your closed-source repositories into a [mkdocs monorepo](https://github.com/backstage/mkdocs-monorepo-plugin), and explicitly ONLY include your documentation sub-folders in the `mkdocs` artifacts.
 
 ## Quick start
 
-1. Install the module using pip: `pip3 install mkdocs-exclude`
-
+1. Install the module using pip: `pip3 install mkdocs-conditional-include`
 2. In your project, add a plugin configuration to `mkdocs.yml`:
 
-   ```yaml
-   plugins:
-     - exclude:
-         glob:
-           - exclude/this/path/*
-           - "*.tmp"
-           - "*.pdf"
-           - "*.gz"
-         regex:
-           - '.*\.(tmp|bin|tar)$'
-   ```
+```yaml
+plugins:
+  - conditional_include:
+      rules:
+        - prefix: my-docs
+          regex:
+            - '.*\/docs\/.*'
+            - '.*\/docs-assets\/.*'
+        - prefix: my-docs-2
+          regex:
+            - '.*\/docs\/.*'
+```
 
-You can provide zero or more patterns of each type.  (If you don't provide
-any patterns, then nothing will happen!)
-
-Note!  Because of peculiarity of yaml syntax, the `glob:` and `regex:` lines
-**must not** start with a dash, but the lines under them **must** start with
-a dash.
-
-Also because of yaml, patterns that start with a punctuation mark must be
-quoted.
-
-When writing regexes, it's best to use single quotes rather than double
-quotes, so that your regex backslash escapes are preserved correctly without
-having to be doubled up.
+Not specifying any prefix will run the particular rule over all files, thus filtering everything.

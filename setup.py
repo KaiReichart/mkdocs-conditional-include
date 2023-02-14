@@ -6,16 +6,15 @@ def read(name):
     mydir = os.path.abspath(os.path.dirname(__file__))
     return open(os.path.join(mydir, name)).read()
 
-
 setuptools.setup(
-    name='mkdocs-exclude',
-    version='1.0.2',
-    packages=['mkdocs_exclude'],
-    url='https://github.com/apenwarr/mkdocs-exclude',
+    name='mkdocs-conditional-include',
+    version='0.0.1',
+    packages=['mkdocs_conditional_include'],
+    url='https://github.com/KaiReichart/mkdocs-conditional-include',
     license='Apache',
-    author='Avery Pennarun',
-    author_email='apenwarr@gmail.com',
-    description='A mkdocs plugin that lets you exclude files or trees.',
+    author='Kai Reichart',
+    author_email='kai@reichart.dev',
+    description='A mkdocs plugin that lets you conditionally include files or trees.',
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
     install_requires=['mkdocs'],
@@ -25,7 +24,7 @@ setuptools.setup(
     # Without them, mkdocs will not be able to recognize it.
     entry_points={
         'mkdocs.plugins': [
-            'exclude = mkdocs_exclude:Exclude',
+            'conditional_include = mkdocs_conditional_include:ConditionalInclude',
         ]
     },
 )
