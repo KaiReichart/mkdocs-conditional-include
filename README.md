@@ -1,6 +1,6 @@
 # File exclude plugin for mkdocs
 
-`mkdocs-exclude` is a [mkdocs plugin](http://www.mkdocs.org/user-guide/plugins/) that allows you
+`mkdocs-conditional-include` is a [mkdocs plugin](http://www.mkdocs.org/user-guide/plugins/) that allows you
 to conditionally include files from your input using regular expressions (regexes).
 
 This will only include the following files in your `mkdocs`:
